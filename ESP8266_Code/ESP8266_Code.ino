@@ -2,7 +2,6 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <FS.h>
-#include "ESP8266FtpServer.h"
 #include "virtualkeyboard.h"
 #include "livepayload.h"
 #include "physicalkeyboard.h"
@@ -15,8 +14,6 @@
 
 const char *ssid = "WSD";
 const char *password = "badUSBWifi";
-const char *ftp_username = "esp8266";
-const char *ftp_password = "esp8266";
 
 const String HTML_CSS_STYLING = "<html><head><meta charset=\"utf-8\"><title>BadUsb_PControl</title><style>     body {     background-color: #333333;     font-family: \"Century Gothic\", Arial;     color: white;     margin: 20px;}.myButton:link, .myButton:visited {background: linear-gradient(#777777, #444444);color: white;padding: 4px;min-width: 100px;border-radius: 5px;border: 2px solid white;text-align: center;margin-right: 20px;text-decoration: none;display: inline-block;transition: 0.25s;}  .myButton:hover, .myButton:active {background: linear-gradient(#888888, #555555);border: 2px solid deepskyblue;border-radius: 10px;transform: scale(1.15);}</style></head><body><div id=\"header\"><div id=\"menu\"><ul><a class=\"myButton\" href=\"/\">Virtual Keyboard</a><a class=\"myButton\" href=\"/physicalkeyboard\">Physical Keyboard</a><a class=\"myButton\" href=\"/livepayload\">Live Payload</a><a class=\"myButton\" href=\"/uploadpayload\">Upload Payload</a><a class=\"myButton\" href=\"/listpayloads\">Choose Payload</a><a class=\"myButton\" href=\"/exfil\">Exfiltration</a></ul></div></div><hr>";
 const String HTML_BACK_TO_INDEX = "<html><head><meta charset=\"UTF-8\"><title>BadUsb_PControl</title><style>body {background-color: #333333;font-family: \"Century Gothic\", Arial;color: white;margin: 20px;}  .myButton:link, .myButton:visited {background: linear-gradient(#777777, #444444);color: white;padding: 4px;min-width: 100px;border-radius: 5px;border: 2px solid white;text-align: center;margin-right: 20px;text-decoration: none;display: inline-block;transition: 0.25s;}  .myButton:hover, .myButton:active {background: linear-gradient(#888888, #555555);border: 2px solid deepskyblue;border-radius: 10px;transform:scale(1.15);}</style></head><body><div id=\"header\"><div id=\"menu\">     <ul><a class=\"myButton\" href=\"/\">Back to Index</a> </div></div><hr>";
@@ -35,7 +32,6 @@ File fsUploadFile;
 Dir dir = SPIFFS.openDir("/");
 
 ESP8266WebServer server(80);
-FtpServer ftpSrv;
 
 void runpayload() {
     File f = SPIFFS.open(autopayload, "r");
