@@ -54,7 +54,6 @@ const char PhysicalKeyboard[] PROGMEM = R"=====(
     </style>
   </head>
   <body>
-  <center>
     <div id="header">
       <div id="menu">
         <ul>
@@ -67,7 +66,6 @@ const char PhysicalKeyboard[] PROGMEM = R"=====(
       </div>
     </div>
     <hr>
-    <br>
         </style>
         <script>
         function mobileCheck() { 
